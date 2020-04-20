@@ -12,26 +12,22 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     plane.setPosition(Math.randomRange(0, 160), Math.randomRange(0, 120))
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    weaponplane = sprites.createProjectileFromSprite(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . f . . . . . . . . 
-. . . . . . f 5 f . . . . . . . 
-. . . . . f 5 5 5 f . . . . . . 
-. . . . . f d d d f . . . . . . 
-. . . . . f f d f f . . . . . . 
-. . . . . f d d d f . . . . . . 
-. . . . . f f d f f . . . . . . 
-. . . . . f d d d f . . . . . . 
-. . . . . f f d f f . . . . . . 
-. . . . . f d d d f . . . . . . 
-. . . . . . f f f . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
+    bullet = sprites.createProjectileFromSprite(img`
+. . . f f f f . . . 
+. . f c c c c f . . 
+. f c 2 2 2 2 c f . 
+f c 2 2 4 4 2 2 c f 
+f c 2 4 4 4 4 2 c f 
+f c 2 4 4 4 4 2 c f 
+f c 2 2 4 4 2 2 c f 
+. f c 2 2 2 2 c f . 
+. . f c c c c f . . 
+. . . f f f f . . . 
 `, plane, 0, -140)
-    weaponplane.setKind(SpriteKind.Weapon)
+    bullet.setKind(SpriteKind.Weapon)
+    bullet.startEffect(effects.warmRadial)
     music.pewPew.play()
+    scene.cameraShake(2, 100)
 })
 sprites.onOverlap(SpriteKind.Weapon, SpriteKind.Projectile, function (sprite, otherSprite) {
     sprite.destroy()
@@ -42,7 +38,7 @@ sprites.onOverlap(SpriteKind.Weapon, SpriteKind.Projectile, function (sprite, ot
 info.onLifeZero(function () {
     game.over(false, effects.clouds)
 })
-let weaponplane: Sprite = null
+let bullet: Sprite = null
 let plane: Sprite = null
 game.setDialogCursor(img`
 . . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
